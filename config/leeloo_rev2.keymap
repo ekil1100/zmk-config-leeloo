@@ -8,8 +8,8 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
-#define HYPER   LS(LC(LA(LGUI)))
-#define MEH     LS(LC(LALT))
+#define hyper   LC(LS(LA(LGUI)))
+#define meh     LC(LS(LALT))
 
 #define BT0     BT_SEL 0
 #define BT1     BT_SEL 1
@@ -25,46 +25,57 @@
 #define NEXT    C_NEXT
 #define PREV    C_PREV
 
-#define OSX     0
-#define LOW     1
-#define RAI     2
-#define ADJ     3
-#define NUM     4
-#define FUN     5
+#define win     0
+#define osx     1
+#define lower   2
+#define raise   3
+#define adj     4
+#define num     5
+#define func    6
 
 / {
     keymap {
         compatible = "zmk,keymap";
+        win_layer {
+            label = "win";
+            bindings = <
+&kp GRAVE     &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                        &kp N6  &kp N7  &kp N8      &kp N9  &kp N0      &kp BSPC
+&mt meh TAB   &kp Q   &kp W   &kp E   &kp R   &kp T                         &kp Y   &kp U   &kp I       &kp O   &kp P       &kp BSLH
+&mt hyper ESC &kp A   &kp S   &kp D   &kp F   &kp G                         &kp H   &kp J   &kp K       &kp L   &kp SEMI    &kp SQT
+&sk LSHFT     &kp Z   &kp X   &kp C   &kp V   &kp B  &mo func     &tog num  &kp N   &kp M   &kp COMMA   &kp DOT &kp FSLH    &kp RSHFT
+                 &kp MINUS &kp LALT &kp LCTRL &lt lower SPACE     &lt raise RET &kp LGUI &mo adj &kp EQUAL
+            >;
+        };
 
-        default_layer {
+        osx_layer {
             label = "osx";
             bindings = <
-&kp GRAVE       &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                        &kp N6  &kp N7  &kp N8      &kp N9  &kp N0      &kp BSPC
-&mt MEH TAB     &kp Q   &kp W   &kp E   &kp R   &kp T                         &kp Y   &kp U   &kp I       &kp O   &kp P       &kp BSLH
-&mt HYPER ESC   &kp A   &kp S   &kp D   &kp F   &kp G                         &kp H   &kp J   &kp K       &kp L   &kp SEMI    &kp SQT
-&sk LSHFT       &kp Z   &kp X   &kp C   &kp V   &kp B   &mo FUN     &tog NUM    &kp N   &kp M   &kp COMMA   &kp DOT &kp FSLH    &kp CAPS
-           &lt ADJ MINUS    &kp LALT   &lt LOW SPACE   &kp LGUI     &lt NUM RET   &lt RAI SPACE   &kp LCTRL   &kp EQUAL
+&kp GRAVE     &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                        &kp N6  &kp N7  &kp N8      &kp N9  &kp N0      &kp BSPC
+&mt meh TAB   &kp Q   &kp W   &kp E   &kp R   &kp T                         &kp Y   &kp U   &kp I       &kp O   &kp P       &kp BSLH
+&mt hyper ESC &kp A   &kp S   &kp D   &kp F   &kp G                         &kp H   &kp J   &kp K       &kp L   &kp SEMI    &kp SQT
+&sk LSHFT     &kp Z   &kp X   &kp C   &kp V   &kp B  &mo func     &tog num  &kp N   &kp M   &kp COMMA   &kp DOT &kp FSLH    &kp CAPS
+                  &kp MINUS &kp LALT &kp LGUI &lt lower SPACE     &lt raise RET &kp LCTRL &mo adj &kp EQUAL
             >;
         };
 
         lower_layer {
             label = "lower";
             bindings = <
-&trans &trans   &trans &trans   &trans   &trans                  &trans    &trans   &trans   &trans    &trans    &trans
-&trans &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT               &kp STAR  &kp LBKT &kp RBKT &kp FSLH &kp AMPS  &kp CARET
-&trans &trans   &trans &trans   &trans   &trans                  &kp PLUS  &kp LPAR &kp RPAR &kp MINUS  &kp PIPE  &kp BSLH
-&trans &trans   &trans &trans   &trans   &trans  &trans   &trans &kp UNDER &kp LBRC &kp RBRC &kp EQUAL &kp GRAVE &kp TILDE
-                            &trans &trans &trans &trans     &trans &trans &trans &trans
+&trans &trans   &trans &trans   &trans   &trans                  &trans    &trans    &kp LT   &kp GT   &trans    &trans
+&trans &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT               &kp STAR  &kp FSLH  &kp LBRC &kp RBRC &kp AMPS  &kp CARET
+&trans &kp N1   &kp N2 &kp N3   &kp N4   &kp N5                  &kp MINUS &kp PLUS  &kp LPAR &kp RPAR &kp PIPE  &kp BSLH
+&trans &kp N6   &kp N7 &kp N8   &kp N9   &kp N0  &trans   &trans &kp UNDER &kp EQUAL &kp LBKT &kp RBKT &kp TILDE &kp GRAVE
+                            &trans &trans &trans &trans   &trans &trans &trans &trans
             >;
         };
 
         raise_layer {
             label = "raise";
             bindings = <
-&trans &trans &trans &trans &trans &trans                      &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans                      &trans &trans &trans &trans &trans &kp DEL
 &trans &trans &trans &trans &trans &trans                      &trans &trans &trans &trans &trans &trans
 &trans &trans &trans &trans &trans &trans                      &kp LEFT &kp DOWN  &kp UP     &kp RIGHT &trans &trans
-&trans &trans &trans &trans &trans &trans &trans        &trans &kp HOME &kp PG_DN &kp PG_UP  &kp END   &trans &trans
+&trans &trans &trans &trans &trans &trans &trans        &trans &kp HOME &kp PG_DN &kp PG_UP  &kp END   &trans &kp CAPS
                      &trans &trans &trans &trans        &trans &trans &trans &trans
             >;
         };
@@ -73,9 +84,9 @@
             label = "adjust";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-&kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6                      &kp F7  &kp F8  &kp F9  &kp F10 &kp F11 &kp F12
-&trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5                      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp F6  &kp F7  &kp F8  &kp F9  &kp F10                     &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &kp F11 &kp F12 &trans      &trans  &tog osx  &trans  &trans  &trans  &trans  &trans
                         &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans
             >;
         };
@@ -83,10 +94,10 @@
         number_layer {
             label = "number";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &kp PRCNT                   &kp STAR &kp N7 &kp N8 &kp N9 &kp FSLH &kp CARET
-&trans  &trans  &trans  &trans  &trans  &trans                      &kp PLUS &kp N4 &kp N5 &kp N6 &kp MINUS &kp EQUAL
-&trans  &trans  &trans  &trans  &trans  &trans  &trans      &trans  &kp N0   &kp N1 &kp N2 &kp N3 &kp DOT  &kp RET
+&trans  &trans  &trans  &trans   &trans   &trans                        &trans  &trans  &trans  &trans  &trans  &kp DEL
+&trans  &trans  &trans  &kp EXCL &kp DLLR &kp PRCNT                     &kp STAR &kp N7 &kp N8 &kp N9 &kp FSLH &kp BSPC
+&trans  &trans  &trans  &kp LPAR &kp RPAR &kp CARET                     &kp MINUS &kp N4 &kp N5 &kp N6 &kp PLUS &kp ESC
+&trans  &trans  &trans  &trans   &trans   &kp COLON  &trans     &trans  &kp N0   &kp N1 &kp N2 &kp N3 &kp DOT  &kp EQUAL
                         &trans  &trans  &trans  &trans      &trans  &trans &trans &trans
             >;
         };
@@ -94,11 +105,11 @@
         function_layer {
             label = "function";
             bindings = <
-&bt BT0 &bt BT1 &bt BT2 &bt BT3     &bt BT4     &bt BTC                     &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans      &trans      &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp PP  &kp VOLDN   &kp VOLUP   &kp MUTE                    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &kp PREV    &kp NEXT    &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans
+&trans  &trans  &trans &bt BT0  &bt BT1  &bt BT2                     &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans &bt BT3  &bt BT4  &bt BTC                      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &kp PP &kp PREV &kp NEXT &kp VOLUP                   &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans &trans   &kp MUTE &kp VOLDN  &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                                &trans  &trans  &trans  &trans     &trans  &trans  &trans  &trans
             >;
         };
     };
